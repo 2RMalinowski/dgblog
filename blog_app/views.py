@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from .forms import PostForm, CommentForm
-from .models import Post, Comment
+from .models import Post, Comment, MyItem
 from django.views.generic import ListView, View
 
 
@@ -34,6 +34,11 @@ def post_detail(request, pk):
     return render(request, 'blog_app/post_detail.html', {'post': post})
 
 
+def my_item(request):
+    items = MyItem.objects.all
+    return render(request, 'blog_app/items_list.html', {'items': items})
+
+
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -48,15 +53,15 @@ def add_comment_to_post(request, pk):
     return render(request, 'blog_app/add_comment_to_post.html', {'form': form})
 
 
-# @login_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
-
-
 # @login_required
+
+
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
+# @login_required

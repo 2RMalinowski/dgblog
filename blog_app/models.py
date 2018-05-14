@@ -34,3 +34,14 @@ class Comment(models.Model):
 
     def approved_comments(self):
         return self.comments.filter(approved_comment=True)
+
+
+class MyItem(models.Model):
+    name = models.CharField(max_length=150)
+    body = models.TextField(blank=True)
+    # slug = models.SlugField(max_length=300, unique_for_date='created')
+    created = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return 'blog_app:item', (self.slug,)
+
