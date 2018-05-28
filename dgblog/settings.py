@@ -1,5 +1,6 @@
-from auth import secret_key, pg_pass
 import os
+
+from auth import secret_key, pg_pass
 
 # Build paths inside the project like this: os.path.join    (BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
